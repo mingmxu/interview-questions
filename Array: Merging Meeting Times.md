@@ -119,7 +119,7 @@ Write a solution that's efficient even when we can't put a nice upper bound on t
 ```    
 
 The three cases can be written in a simplier way:
-```            
+```java            
             if(curM.getStartTime() > active.getEndTime() ){
                 //1. not overlap
                 merged.add(active);
