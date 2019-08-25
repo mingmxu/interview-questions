@@ -117,3 +117,16 @@ Write a solution that's efficient even when we can't put a nice upper bound on t
         return merged;
     }
 ```    
+
+The three cases can be written in a simplier way:
+```            
+            if(curM.getStartTime() > active.getEndTime() ){
+                //1. not overlap
+                merged.add(active);
+                active=curM;
+            }else{
+                //2.overlap
+                active.setEndTime( Math.max(active.getEndTime(), curM.getEndTime() ));
+            }
+    }
+```    
