@@ -25,7 +25,7 @@ Here's a sample binary tree node class:
 }
 ```
 
-# Solution
+# Solution 1. recursive
 ```java
     public static int findSecondLargest(BinaryTreeNode rootNode) {
 
@@ -47,4 +47,32 @@ Here's a sample binary tree node class:
         
         scan(node.left, values);
     }
+```
+
+# Solutiom 2. non-recursive
+```java
+    public static int findSecondLargest(BinaryTreeNode rootNode) {
+
+        // find the second largest item in the binary search tree
+        if(rootNode==null || (rootNode.left==null && rootNode.right==null)) 
+            throw new RuntimeException();
+            
+        BinaryTreeNode parent=rootNode;
+        BinaryTreeNode maxRight=parent;
+        while(maxRight.right != null){
+            parent=maxRight;
+            maxRight=maxRight.right;
+        }
+        
+        if(maxRight.right==null && maxRight.left!=null){
+            BinaryTreeNode sndRoot=maxRight.left;
+            while(sndRoot.right!=null){
+                sndRoot=sndRoot.right;
+            }
+            return sndRoot.value;
+        }
+        
+        return parent.value;
+    }
+
 ```
