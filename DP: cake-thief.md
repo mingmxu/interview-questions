@@ -45,7 +45,7 @@ maxDuffelBagValue(cakeTypes, capacity);
 
 Weights and values may be any non-negative integer. Yes, it's weird to think about cakes that weigh nothing or duffel bags that can't hold anything. But we're not just super mastermind criminals—we're also meticulous about keeping our algorithms flexible and comprehensive. 
 
-# Solution:
+# Solution 1: space O(M*N)
 ```java
     public static long maxDuffelBagValue(CakeType[] cakeTypes, int weightCapacity) {
         for(CakeType cake : cakeTypes){
@@ -76,5 +76,30 @@ Weights and values may be any non-negative integer. Yes, it's weird to think abo
             max=Math.max(max, k);
         }
         return max;
+    }
+```
+# Solution 2. SPACE O(N)
+```java
+    public static long maxDuffelBagValue(CakeType[] cakeTypes, int weightCapacity) {
+        for(CakeType cake : cakeTypes){
+            if(cake.weight<=0 && cake.value>0){
+                throw new RuntimeException();
+            }
+        }
+        
+        // calculate the maximum value that we can carry
+        int[] matrix = new int[weightCapacity+1];
+        for(int idx=1; idx<=weightCapacity; ++idx){
+            for(int cIdx=0; cIdx<cakeTypes.length; ++cIdx){
+                if(idx>=cakeTypes[cIdx].weight){
+                    matrix[idx] = Math.max(matrix[idx],
+                        cakeTypes[cIdx].value
+                            +matrix[idx-cakeTypes[cIdx].weight]);
+                }
+                
+            }
+        }
+
+        return matrix[weightCapacity];
     }
 ```
