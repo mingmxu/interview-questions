@@ -9,7 +9,7 @@ Write a method that, given a sentence like the one above, along with the positio
 Example: if the example string above is input with the number 10 (position of the first parenthesis), the output should be 79 (position of the last parenthesis).
 
 
-# Solution
+# Solution 1
 ```java
     public static int getClosingParen(String sentence, int openingParenIndex) {
 
@@ -29,6 +29,36 @@ Example: if the example string above is input with the number 10 (position of th
                 }
                 
                 if(stack.isEmpty()){
+                    return idx;
+                }
+            }
+        }else{
+            throw new RuntimeException();
+        }
+        
+        throw new RuntimeException();
+    }
+```
+
+# Solutiomn 2 O(1) space
+```java 
+    public static int getClosingParen(String sentence, int openingParenIndex) {
+
+        // find the position of the matching closing parenthesis
+        if(sentence.length() > openingParenIndex 
+            && sentence.charAt(openingParenIndex) == '(' ){
+            int stack=1;
+            for(int idx=openingParenIndex+1; idx<sentence.length(); ++idx ){
+                char c = sentence.charAt(idx);
+                if(c=='('){
+                    stack++;
+                    continue;
+                }
+                if(c==')'){
+                    stack--;
+                }
+                
+                if(stack==0){
                     return idx;
                 }
             }
