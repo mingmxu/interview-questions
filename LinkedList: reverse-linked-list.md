@@ -21,7 +21,7 @@ Here's a sample linked list node class:
 ```
 
 
-# Solution 1 O(N) time, O(1) space
+# Solution 1: O(N) time, O(1) space
 ```java
     public static class LinkedListNode {
 
@@ -79,5 +79,32 @@ Here's a sample linked list node class:
         }
         
         return nodeList.get(nodeList.size()-1);
+    }
+```
+
+# Solution 3. make a reversed deep copy
+```java
+    public static class LinkedListNode {
+
+        public int value;
+        public LinkedListNode next;
+
+        public LinkedListNode(int value) {
+            this.value = value;
+        }
+    }
+
+    public static LinkedListNode reverse(LinkedListNode headOfList) {
+
+        // reverse the linked list in place
+        LinkedListNode preNode=null;
+        while(headOfList != null){
+            LinkedListNode newNode = new LinkedListNode(headOfList.value);
+            newNode.next=preNode;
+            preNode=newNode;
+            headOfList = headOfList.next;
+        }
+
+        return preNode;
     }
 ```
