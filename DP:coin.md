@@ -20,7 +20,7 @@ Example: for amount=444 (444¢) and denominations=[1,2,3][1,2,3][1,2,3] (111¢, 
 
 
 
-# Solution:
+# Solution 1: DP
 ```java
     public static int changePossibilities(int amount, int[] denominations) {
         if(amount < 0) throw new RuntimeException();
@@ -36,4 +36,41 @@ Example: for amount=444 (444¢) and denominations=[1,2,3][1,2,3][1,2,3] (111¢, 
         return counts[amount];
     }
 
+```
+
+# Solution 2: backtracking - this may out-of-time for large numbers
+```java
+    public static int changePossibilities(int amount, int[] denominations) {
+        // calculate the number of ways to make change
+        int[] numbersOfEachCoin = new int[denominations.length];
+        Set<String> validCombinations = new HashSet<>();
+        tryACombination(amount, denominations, numbersOfEachCoin, validCombinations);
+
+        return validCombinations.size();
+    }
+    
+    public static void tryACombination(int amount, int[] denominations
+        , int[] numbersOfEachCoin, Set<String> validCombinations){
+        if(amount < 0) return;
+        if(amount==0){
+            //find one
+            validCombinations.add(toString(numbersOfEachCoin));
+            return;
+        }
+        
+        for(int idx=0; idx<denominations.length; ++idx){
+            numbersOfEachCoin[idx]++;
+            tryACombination(amount-denominations[idx], denominations
+                ,numbersOfEachCoin, validCombinations);
+            numbersOfEachCoin[idx]--;
+        }
+    }
+    
+    public static String toString(int[] numbersOfEachCoin){
+        StringBuilder sb = new StringBuilder();
+        for(int n : numbersOfEachCoin){
+            sb.append(n).append(":");
+        }
+        return sb.toString();
+    }
 ```
